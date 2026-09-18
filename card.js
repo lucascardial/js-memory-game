@@ -24,6 +24,7 @@ function shuffleCards(cards) {
         setTimeout(function () {
             cards.forEach(function (cardElement) {
                 cardElement.style.order = Math.floor(Math.random() * 100)
+
             })
         }, shuffleDelay * i)
     }

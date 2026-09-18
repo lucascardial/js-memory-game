@@ -34,9 +34,13 @@
 }
 
 .card-front {
-    background-color: #c40000;
+    background-color: #3e1942;
     transform: rotateY(-90deg);
-    transition-delay: 0s;
+    /* background-image: url('./images/fruits/fruits\ 2.jpg'); */
+    background-size: 63px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 3px solid #585540;
 }
 
 .card[x-state-flipped="1"] .card-back {

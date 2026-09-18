@@ -11,38 +11,22 @@
         return cards;
     }
 
-    function calculateGridColumns(totalCards) {
-        if (totalCards % 2 !== 0) {
-            throw new Error('O total de cartas deve ser par.');
-        }
-
-        const squareRoot = Math.floor(Math.sqrt(totalCards));
-
-        for (let columns = squareRoot; columns >= 2; columns--) {
-            const dividesExactly = totalCards % columns === 0;
-            const isEven = columns % 2 === 0;
-
-            if (dividesExactly && isEven) {
-                return columns;
-            }
-        }
-
-        return 2;
-    }
-
     function drawCards(cards) {
         const gameGrid = document.getElementById('game-grid');
 
 
-        cards.forEach((card) => {
+        cards.forEach((card, id) => {
+            const fruitId = (id + 1 <= 12 ? id : id - 12) + 1;
+
             const cardElement = document.createElement('div');
 
             cardElement.classList.add('card');
-            cardElement.setAttribute('x-state-flipped', '0');
+            cardElement.setAttribute('x-state-flipped', '1');
+            cardElement.setAttribute('id', `card-${id}`)
 
             cardElement.innerHTML = `
                 <div class="card-back">?</div>
-                <div class="card-front">${card.id}</div>
+                <div class="card-front" style="background-image: url('http://127.0.0.1:5501/images/fruits/fruits-${fruitId}.jpg')"></div>
             `;
 
             cardElement.addEventListener('click', flipCard);
@@ -97,9 +81,11 @@
 
             animation.finished.then(() => {
                 card.style.pointerEvents = '';
-                console.log(index, totalCards)
+
                 if (index == totalCards - 1) {
-                    exibirCartas();
+                    setTimeout(() => {
+                        shuffleCards(cards)
+                    }, 500);
                 }
             });
         });
@@ -115,7 +101,7 @@
         );
     }
 
-    const cards = initializeCards(20);
+    const cards = initializeCards(24);
 
     drawCards(cards);
 })();
