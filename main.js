@@ -26,7 +26,7 @@
 
             cardElement.innerHTML = `
                 <div class="card-back"></div>
-                <div class="card-front" style="background-image: url('http://127.0.0.1:5501/images/fruits/fruits-${fruitId}.jpg')"></div>
+                <div class="card-front" style="background-image: url('images/fruits/fruits-${fruitId}.jpg')"></div>
             `;
 
             cardElement.addEventListener('click', flipCard);
