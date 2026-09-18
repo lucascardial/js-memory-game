@@ -1,0 +1,78 @@
+.card {
+    width: 120px;
+    height: 120px;
+    perspective: 1000px;
+    cursor: pointer;
+    bottom: 20px;
+    font-size: 70px;
+}
+
+.card-back,
+.card-front {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 100%;
+
+    color: #fff;
+
+    backface-visibility: hidden;
+
+    transition: transform 0.15s linear;
+}
+
+.card-back {
+    transform: rotateY(0deg);
+    background: #000;
+    background-position: center;
+    background-size: cover;
+}
+
+.card-front {
+    background-color: #c40000;
+    transform: rotateY(-90deg);
+    transition-delay: 0s;
+}
+
+.card[x-state-flipped="1"] .card-back {
+    transform: rotateY(90deg);
+}
+
+.card[x-state-flipped="1"] .card-front {
+    transform: rotateY(0deg);
+    transition-delay: 0.15s;
+}
+
+.card[x-state-flipped="0"] .card-front {
+    transform: rotateY(-90deg);
+    transition-delay: 0s;
+}
+
+.card[x-state-flipped="0"] .card-back {
+    transform: rotateY(0deg);
+    transition-delay: 0.15s;
+}
+
+/* DEFINIÇÃO DOS PASSOS DA DANÇA (Ginga leve para cima, baixo e lados) */
+@keyframes dance {
+    0% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    50% {
+        transform: translateY(-8px) translateX(3px) rotate(2deg) scale(1.02);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        /* Sombra aumenta quando sobe */
+    }
+
+    100% {
+        transform: translateY(4px) translateX(-3px) rotate(-2deg) scale(0.99);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+}

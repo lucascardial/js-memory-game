@@ -1,0 +1,28 @@
+#game-grid {
+    flex: 1;
+    min-height: 0;
+
+    display: grid;
+    grid-template-columns: repeat(5, 120px);
+    grid-template-rows: repeat(5, 120px);
+    gap: 2px;
+
+    justify-content: center;
+    align-content: center;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #1e1d1d;
+}
+
+#card-deck {}
