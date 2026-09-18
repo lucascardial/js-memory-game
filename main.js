@@ -25,7 +25,7 @@
             cardElement.setAttribute('id', `card-${id}`)
 
             cardElement.innerHTML = `
-                <div class="card-back">?</div>
+                <div class="card-back"></div>
                 <div class="card-front" style="background-image: url('http://127.0.0.1:5501/images/fruits/fruits-${fruitId}.jpg')"></div>
             `;
 
@@ -69,8 +69,8 @@
                     },
                 ],
                 {
-                    duration: 450,
-                    delay: index * 80,
+                    duration: 1000,
+                    delay: index * 100,
                     easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
                     fill: 'backwards',
                 },
@@ -79,7 +79,9 @@
             // Evita virar a carta enquanto ela está sendo distribuída.
             card.style.pointerEvents = 'none';
 
-            animation.finished.then(() => {
+            animation.finished.then((animate) => {
+
+
                 card.style.pointerEvents = '';
 
                 if (index == totalCards - 1) {
