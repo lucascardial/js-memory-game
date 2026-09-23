@@ -34,7 +34,11 @@
             gameGrid.append(cardElement);
         });
 
-        animateCards(cards.length);
+        const cardsElements = document.querySelectorAll('#game-grid .card');
+
+        animarDistribuicaoCartas(cardsElements).then(function (cards) {
+            embaralharCartas(cards).then(esconderCartas)
+        });
     }
 
     function animateCards(totalCards) {
@@ -76,20 +80,14 @@
                 },
             );
 
-            // Evita virar a carta enquanto ela está sendo distribuída.
-            card.style.pointerEvents = 'none';
 
-            animation.finished.then((animate) => {
-
-
-                card.style.pointerEvents = '';
-
-                if (index == totalCards - 1) {
+            if (index == totalCards - 1) {
+                animation.finished.then((animate) => {
                     setTimeout(() => {
                         shuffleCards(cards)
                     }, 500);
-                }
-            });
+                });
+            }
         });
     }
 

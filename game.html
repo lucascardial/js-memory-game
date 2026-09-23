@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="card.css">
+    <style>
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(5, 120px);
+            grid-template-rows: repeat(5, 120px);
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="score"></div>
+    <div id="game-screen">
+        <div id="game-board">
+
+        </div>
+    </div>
+    <script>
+        const fruits = [
+            {
+                value: 'blueberry',
+                resource_url: 'images/fruits/blueberry.jpg'
+            },
+            {
+                value: 'cherry',
+                resource_url: 'images/fruits/cherry.jpg'
+            },
+            {
+                value: 'Sicilian lemon',
+                resource_url: 'images/fruits/sicilian-lemon.jpg'
+            },
+            {
+                value: 'grape',
+                resource_url: 'images/fruits/grape.jpg'
+            },
+            {
+                value: 'orange',
+                resource_url: 'images/fruits/orange.jpg'
+            },
+            {
+                value: 'kiwi',
+                resource_url: 'images/fruits/kiwi.jpg'
+            },
+            {
+                value: 'blackberry',
+                resource_url: 'images/fruits/blackberry.jpg'
+            },
+            {
+                value: 'watermellon',
+                resource_url: 'images/fruits/watermellon.jpg'
+            },
+            {
+                value: 'pear',
+                resource_url: 'images/fruits/pear.jpg'
+            },
+            {
+                value: 'green apple',
+                resource_url: 'images/fruits/green-apple.jpg'
+            },
+            {
+                value: 'pomegranate',
+                resource_url: 'images/fruits/pomegranate.jpg'
+            },
+            {
+                value: 'redcurrant',
+                resource_url: 'images/fruits/redcurrant.jpg'
+            }
+        ]
+
+        const gameBoard = document.getElementById('game-board');
+        const scoreElement = document.getElementById('score');
+
+        let score = 0;
+        function handleCardClick(event) {
+            const card = event.target.closest('.card');
+            revelarCarta(card);
+
+            if (openedCard == null) {
+                openedCard = card;
+                return;
+            }
+
+            if (cardsHaveSameValue(openedCard, card)) {
+                openedCard = null;
+                score++
+                renderScore()
+            } else {
+                setTimeout(() => {
+                    esconderCarta(openedCard);
+                    esconderCarta(card)
+
+                    openedCard = null;
+                }, 800)
+            }
+
+        }
+
+        function renderScore() {
+            scoreElement.innerText = score
+        }
+
+        function cardsHaveSameValue(firstCard, secondCard) {
+            return getCardValue(firstCard) === getCardValue(secondCard);
+
+        }
+
+        function getCardValue(card) {
+            const cardId = card.getAttribute('id');
+            return gameFruits[cardId].value;
+        }
+
+        function revelarCarta(card) {
+            card.setAttribute("x-state-flipped", "1")
+        }
+
+        function esconderCarta(card) {
+            card.setAttribute("x-state-flipped", "0")
+        }
+
+        let gameFruits = fruits.slice(0, 4)
+        let openedCard = null;
+
+        gameFruits = [
+            ...gameFruits,
+            ...gameFruits
+        ].sort(() => Math.random() - 0.5)
+
+        gameFruits.forEach((fruit, index) => {
+            const card = document.createElement('div');
+            card.classList.add("card")
+            card.setAttribute("x-state-flipped", "0");
+            card.setAttribute('id', index)
+
+            const cardFront = document.createElement('div')
+            cardFront.classList.add('card-front');
+            cardFront.style.backgroundImage = `url("${fruit.resource_url}")`
+
+            const cardBack = document.createElement('div')
+            cardBack.classList.add('card-back')
+
+            card.append(cardBack)
+            card.append(cardFront);
+
+            gameBoard.append(card)
+
+            card.addEventListener('click', handleCardClick)
+        })
+    </script>
+</body>
+
+</html>

@@ -19,17 +19,6 @@ function flipCards() {
     }, shuffleDelay * (maxShuffles - 2))
 }
 
-function shuffleCards(cards) {
-    for (let i = 1; i <= maxShuffles; i++) {
-        setTimeout(function () {
-            cards.forEach(function (cardElement) {
-                cardElement.style.order = Math.floor(Math.random() * 100)
-                cardElement.classList.add('shaking')
-            })
-        }, shuffleDelay * i)
-    }
-}
-
 function getCards() {
     return document.querySelectorAll('.card')
 }
