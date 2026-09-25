@@ -79,25 +79,50 @@
         const scoreElement = document.getElementById('score');
 
         let score = 0;
+
+        let opendedCards = 0;
+
         function handleCardClick(event) {
             const card = event.target.closest('.card');
+
+
+            if (opendedCards > 1) {
+                return
+            }
+
+            opendedCards++
+
+
+            if (card.classList.contains('card-resolved')) {
+                return
+            }
+
+
             revelarCarta(card);
 
-            if (openedCard == null) {
-                openedCard = card;
+            if (firstCard == null) {
+                firstCard = card;
                 return;
             }
 
-            if (cardsHaveSameValue(openedCard, card)) {
-                openedCard = null;
+            if (vericarCarta(firstCard, card)) {
+                return
+            }
+
+            if (cardsHaveSameValue(firstCard, card)) {
                 score++
                 renderScore()
+                card.classList.add('card-resolved')
+                firstCard.classList.add('card-resolved')
+                firstCard = null;
+                opendedCards = 0
             } else {
                 setTimeout(() => {
-                    esconderCarta(openedCard);
+                    esconderCarta(firstCard);
                     esconderCarta(card)
+                    opendedCards = 0
 
-                    openedCard = null;
+                    firstCard = null;
                 }, 800)
             }
 
@@ -117,6 +142,14 @@
             return gameFruits[cardId].value;
         }
 
+        function vericarCarta(firstCard, secondCard) {
+            return getCardId(firstCard) === getCardId(secondCard);
+        }
+
+        function getCardId(card) {
+            return card.getAttribute('id');
+        }
+
         function revelarCarta(card) {
             card.setAttribute("x-state-flipped", "1")
         }
@@ -125,8 +158,8 @@
             card.setAttribute("x-state-flipped", "0")
         }
 
-        let gameFruits = fruits.slice(0, 4)
-        let openedCard = null;
+        let gameFruits = fruits.slice(0, 10)
+        let firstCard = null;
 
         gameFruits = [
             ...gameFruits,
@@ -153,6 +186,8 @@
 
             card.addEventListener('click', handleCardClick)
         })
+
+        renderScore();
     </script>
 </body>
 

@@ -32,7 +32,7 @@
     background-position: center;
     background-size: cover;
     background-image: url('./images/card-cover.png');
-    background-size: 63px;
+    background-size: 20px;
     background-position: center;
     background-repeat: no-repeat;
     border: 3px solid #1D0720;
@@ -80,6 +80,11 @@
 .shaking {
     animation: shake 3s;
     animation-iteration-count: infinite;
+}
+
+.card-resolved {
+    filter: sepia(1);
+    cursor: not-allowed;
 }
 
 @keyframes shake {
