@@ -91,14 +91,20 @@ function createCard(fruit) {
 }
 
 function startGame() {
-    const gameFruits = fruits.slice(0, TOTAL_PAIRS);
+    pairsFound = 0;
+    openedCards = 0;
+    firstCard = null;
 
-    shuffle([...gameFruits, ...gameFruits]).forEach((fruit) => {
-        gameBoard.append(createCard(fruit));
-    });
+    const gameFruits = fruits.slice(0, TOTAL_PAIRS);
+    const cards = shuffle([...gameFruits, ...gameFruits]).map(createCard);
+    gameBoard.replaceChildren(...cards);
 
     totalPairsElement.innerText = TOTAL_PAIRS;
     renderScore();
 }
+
+// O botão "Reiniciar jogo" fecha o dialog (command="close"); fechar com Esc
+// também conta. Em ambos os casos começamos uma nova partida.
+gameOverDialog.addEventListener('close', startGame);
 
 startGame();
