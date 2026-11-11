@@ -1,0 +1,58 @@
+.game-background {
+    position: relative;
+    isolation: isolate;
+
+    min-height: 100dvh;
+    overflow: hidden;
+
+    background-color: #360044;
+}
+
+/* Imagens decorativas nos cantos da tela */
+
+.corner {
+    position: absolute;
+    z-index: 1;
+
+    width: clamp(180px, 30vw, 520px);
+    height: auto;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+.corner--top-left {
+    top: -10px;
+    left: -10px;
+}
+
+.corner--top-right {
+    top: -10px;
+    right: -10px;
+}
+
+.corner--bottom-left {
+    bottom: -30px;
+    left: -10px;
+}
+
+.corner--bottom-right {
+    bottom: -10px;
+    right: -10px;
+}
+
+/* Tablets */
+
+@media (max-width: 1024px) {
+    .corner {
+        width: clamp(160px, 28vw, 350px);
+    }
+}
+
+/* Celulares */
+
+@media (max-width: 600px) {
+    .corner {
+        width: clamp(130px, 38vw, 220px);
+    }
+}
