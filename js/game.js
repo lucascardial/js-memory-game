@@ -39,24 +39,17 @@ function verifyGameOver() {
 function handleCardClick(event) {
     const card = event.currentTarget;
 
-    if (openedCards > 1) {
+    // Ignora cliques que não devem contar como carta aberta: já há duas
+    // cartas viradas, a carta já foi resolvida ou é a mesma da primeira.
+    if (openedCards > 1 || card.classList.contains('card-resolved') || card === firstCard) {
         return;
     }
 
     openedCards++;
-
-    if (card.classList.contains('card-resolved')) {
-        return;
-    }
-
     revealCard(card);
 
     if (firstCard === null) {
         firstCard = card;
-        return;
-    }
-
-    if (card === firstCard) {
         return;
     }
 
