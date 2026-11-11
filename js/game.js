@@ -1,4 +1,4 @@
-const TOTAL_PAIRS = 2;
+const TOTAL_PAIRS = 10;
 const HIDE_DELAY_MS = 800;
 
 const gameBoard = document.getElementById('game-board');
