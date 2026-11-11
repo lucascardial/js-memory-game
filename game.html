@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
@@ -7,22 +7,50 @@
     <title>Document</title>
     <link rel="stylesheet" href="card.css">
     <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
         #game-board {
             display: grid;
             grid-template-columns: repeat(5, 120px);
             grid-template-rows: repeat(5, 120px);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 100px
         }
     </style>
 
 </head>
 
 <body>
-    <div id="score"></div>
-    <div id="game-screen">
-        <div id="game-board">
+    <div class="game-background">
+        <img src="images/left-top.png" class="corner corner--top-left" alt="">
+        <img src="images/rigth-top.png" class="corner corner--top-right" alt="">
+        <img src="images/left-bottom.png" class="corner corner--bottom-left" alt="">
+        <img src="images/right-bottom.png" class="corner corner--bottom-right" alt="">
+        <div class="container">
+            <div id="score-label">
+                <h1>Cartas encontradas: <span id="total_pairs_found">x</span> / <span id="total_pairs">y</span></h1>
+            </div>
+            <div id="game-screen">
+                <div id="game-board">
 
+                </div>
+            </div>
         </div>
+
+        
     </div>
+    <dialog id="gameover-dialog">
+            <p>Voce é ninja!</p>
+            <button commandfor="gameover-dialog" command="close">Reiniciar jogo</button>
+        </dialog>
     <script>
         const fruits = [
             {
@@ -75,12 +103,30 @@
             }
         ]
 
+        const gameoverDialog = document.getElementById('gameover-dialog');
         const gameBoard = document.getElementById('game-board');
-        const scoreElement = document.getElementById('score');
+        const totalPairsFoundElement = document.getElementById('total_pairs_found');
+        const totalPairselement = document.getElementById('total_pairs');
 
         let score = 0;
 
         let opendedCards = 0;
+
+        const totalPairs = 2;
+        let gameFruits = fruits.slice(0, totalPairs)
+        let firstCard = null;
+        totalPairselement.innerHTML = totalPairs;
+
+        gameFruits = [
+            ...gameFruits,
+            ...gameFruits
+        ].sort(() => Math.random() - 0.5)
+
+        function verifyGameOver() {
+            if (score === totalPairs) {
+                gameoverDialog.showModal();
+            }
+        }
 
         function handleCardClick(event) {
             const card = event.target.closest('.card');
@@ -112,6 +158,7 @@
             if (cardsHaveSameValue(firstCard, card)) {
                 score++
                 renderScore()
+                verifyGameOver()
                 card.classList.add('card-resolved')
                 firstCard.classList.add('card-resolved')
                 firstCard = null;
@@ -129,8 +176,9 @@
         }
 
         function renderScore() {
-            scoreElement.innerText = score
+            totalPairsFoundElement.innerText = score
         }
+
 
         function cardsHaveSameValue(firstCard, secondCard) {
             return getCardValue(firstCard) === getCardValue(secondCard);
@@ -158,13 +206,6 @@
             card.setAttribute("x-state-flipped", "0")
         }
 
-        let gameFruits = fruits.slice(0, 10)
-        let firstCard = null;
-
-        gameFruits = [
-            ...gameFruits,
-            ...gameFruits
-        ].sort(() => Math.random() - 0.5)
 
         gameFruits.forEach((fruit, index) => {
             const card = document.createElement('div');
