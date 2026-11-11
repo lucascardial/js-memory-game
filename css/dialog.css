@@ -1,0 +1,25 @@
+/*
+ * O navegador centraliza um <dialog> aberto com showModal() usando
+ * `position: fixed; inset: 0; margin: auto`. O reset em base.css zera a
+ * margem de todos os elementos, o que jogava o dialog para o canto
+ * superior esquerdo. Aqui devolvemos a margem automática.
+ */
+dialog {
+    margin: auto;
+    padding: 24px 32px;
+
+    border: none;
+    border-radius: 12px;
+
+    text-align: center;
+}
+
+dialog button {
+    margin-top: 16px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+dialog::backdrop {
+    background-color: rgb(0 0 0 / 60%);
+}
